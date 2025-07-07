@@ -93,7 +93,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       <div
         className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
           dragActive
-            ? "border-blue-400 bg-blue-50 dark:bg-blue-900/20"
+            ? "border-blue-400 bg-blue-50 dark:bg-blue-900"
             : "border-gray-300 dark:border-gray-600 hover:border-gray-400"
         }`}
         onDragEnter={handleDrag}
@@ -154,7 +154,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       </div>
 
       {error && (
-        <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 rounded-md">
+        <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900 dark:text-red-400 rounded-md">
           {error}
         </div>
       )}

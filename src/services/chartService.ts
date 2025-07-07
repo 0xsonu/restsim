@@ -17,12 +17,17 @@ export interface ChartService {
 }
 
 class ChartServiceImpl implements ChartService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async generateChart(
     type: string,
-    _data: Record<string, unknown>
+    data: Record<string, unknown>
   ): Promise<ChartData> {
-    // Simulate chart generation
+    // Simulate chart generation - data parameter is for future use
+    console.log(
+      "Generating chart for type:",
+      type,
+      "with data keys:",
+      Object.keys(data)
+    );
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     return {

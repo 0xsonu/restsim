@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import Login from "@/components/Login";
 import Dashboard from "@/components/Dashboard";
-// import NetworkBackground from '@/components/NetworkBackground';
+// import NetworkBackground from "@/components/NetworkBackground";
 import { useEffect } from "react";
 
 export default function Home() {

@@ -15,8 +15,6 @@ import {
   History as HistoryIcon,
 } from "lucide-react";
 import { useServerStatus } from "@/hooks/useServerStatus";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   activeSection: string;
@@ -56,174 +54,170 @@ const Sidebar: React.FC<SidebarProps> = ({
       disabled: true,
     },
     {
-      id: "performance",
-      label: "Performance Analysis",
+      id: "monitoring",
+      label: "Monitoring",
       icon: Activity,
-      description: "Monitor system performance",
+      description: "System monitoring",
       disabled: true,
     },
     {
-      id: "traffic-analysis",
-      label: "Traffic Analysis",
+      id: "deployments",
+      label: "Deployments",
       icon: Database,
-      description: "Analyze network traffic",
+      description: "Manage deployments",
       disabled: true,
     },
     {
-      id: "user-management",
+      id: "reports",
+      label: "Reports",
+      icon: FileText,
+      description: "Generate reports",
+      disabled: true,
+    },
+    {
+      id: "users",
       label: "User Management",
       icon: Users,
-      description: "Manage system users",
+      description: "Manage users",
       disabled: true,
     },
     {
       id: "security",
       label: "Security",
       icon: Shield,
-      description: "Security settings and logs",
-      disabled: true,
-    },
-    {
-      id: "system-logs",
-      label: "System Logs",
-      icon: FileText,
-      description: "View system logs",
-      disabled: true,
-    },
-    {
-      id: "hardware-monitor",
-      label: "Hardware Monitor",
-      icon: Cpu,
-      description: "Monitor hardware resources",
-      disabled: true,
-    },
-    {
-      id: "rf-analysis",
-      label: "RF Analysis",
-      icon: Radio,
-      description: "Radio frequency analysis",
+      description: "Security settings",
       disabled: true,
     },
   ];
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex flex-col">
-      {/* Header */}
+    <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-full flex flex-col">
+      {/* Logo Section */}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-            <Cpu className="h-6 w-6 text-white" />
+          <div className="relative">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+              <Cpu className="h-6 w-6 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse">
+              <Radio className="h-3 w-3 text-white m-0.5" />
+            </div>
           </div>
           <div>
-            <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-              SimBot
+            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+              RESTSim
             </h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-gray-600 dark:text-gray-400">
               Network Simulation
             </p>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
-        <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
-          Main Navigation
+      {/* Status Bar */}
+      <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div
+              className={`w-2 h-2 rounded-full ${
+                isOnline ? "bg-green-500" : "bg-red-500"
+              } animate-pulse`}
+            />
+            <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
+              {isOnline ? "System Online" : "System Offline"}
+            </span>
+          </div>
+          <div className="text-xs text-gray-500">v2.1.0</div>
         </div>
+      </div>
 
-        {menuItems.slice(0, 3).map((item) => {
-          const Icon = item.icon;
+      {/* Navigation Menu */}
+      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+        {menuItems.map((item) => {
+          const IconComponent = item.icon;
           const isActive = activeSection === item.id;
-          const isDisabled =
-            item.disabled || (!isOnline && item.id !== "history");
+          const isDisabled = item.disabled;
 
           return (
-            <Button
+            <button
               key={item.id}
-              variant={isActive ? "secondary" : "ghost"}
-              className={cn(
-                "w-full justify-start text-left h-auto p-3",
-                isActive &&
-                  "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300",
-                isDisabled && "opacity-50 cursor-not-allowed"
-              )}
               onClick={() => !isDisabled && onSectionChange(item.id)}
               disabled={isDisabled}
+              className={`
+                w-full text-left p-3 rounded-lg transition-all duration-200 group
+                ${
+                  isActive
+                    ? "bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 shadow-sm"
+                    : isDisabled
+                    ? "text-gray-400 dark:text-gray-600 cursor-not-allowed"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                }
+              `}
             >
-              <div className="flex items-center space-x-3 w-full">
-                <Icon className="h-5 w-5 flex-shrink-0" />
+              <div className="flex items-center space-x-3">
+                <div
+                  className={`
+                  p-2 rounded-lg transition-colors
+                  ${
+                    isActive
+                      ? "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-400"
+                      : isDisabled
+                      ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700"
+                  }
+                `}
+                >
+                  <IconComponent className="h-4 w-4" />
+                </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium truncate">
+                  <div
+                    className={`
+                    text-sm font-medium truncate
+                    ${
+                      isActive
+                        ? "text-blue-700 dark:text-blue-300"
+                        : isDisabled
+                        ? "text-gray-400 dark:text-gray-600"
+                        : "text-gray-900 dark:text-white"
+                    }
+                  `}
+                  >
                     {item.label}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <div
+                    className={`
+                    text-xs truncate
+                    ${
+                      isActive
+                        ? "text-blue-600 dark:text-blue-400"
+                        : isDisabled
+                        ? "text-gray-400 dark:text-gray-600"
+                        : "text-gray-500 dark:text-gray-400"
+                    }
+                  `}
+                  >
                     {item.description}
                   </div>
                 </div>
-              </div>
-            </Button>
-          );
-        })}
-
-        <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4 mt-8">
-          Advanced Features
-        </div>
-
-        {menuItems.slice(3).map((item) => {
-          const Icon = item.icon;
-          const isActive = activeSection === item.id;
-          const isDisabled = item.disabled || !isOnline;
-
-          return (
-            <Button
-              key={item.id}
-              variant={isActive ? "secondary" : "ghost"}
-              className={cn(
-                "w-full justify-start text-left h-auto p-3",
-                isActive &&
-                  "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300",
-                isDisabled && "opacity-50 cursor-not-allowed"
-              )}
-              onClick={() => !isDisabled && onSectionChange(item.id)}
-              disabled={isDisabled}
-            >
-              <div className="flex items-center space-x-3 w-full">
-                <Icon className="h-5 w-5 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium truncate">
-                    {item.label}
+                {isDisabled && (
+                  <div className="text-xs bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-1 rounded">
+                    Soon
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                    {item.description}
-                  </div>
-                </div>
+                )}
               </div>
-            </Button>
+            </button>
           );
         })}
       </nav>
 
       {/* Footer */}
       <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-        <div
-          className={`flex items-center space-x-2 text-xs ${
-            isOnline ? "text-green-600" : "text-red-600"
-          }`}
-        >
-          <div
-            className={`w-2 h-2 rounded-full ${
-              isOnline ? "bg-green-500" : "bg-red-500"
-            } animate-pulse`}
-          />
-          <span>Server {isOnline ? "Online" : "Offline"}</span>
-        </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-          {isOnline
-            ? "All systems operational"
-            : "Limited functionality available"}
+        <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+          <div>RESTSim Platform</div>
+          <div>© 2024 Network Solutions</div>
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
 

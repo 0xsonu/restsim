@@ -1,4 +1,4 @@
-"use climport NotificationCenter from '@/components/NotificationCenter';ent";
+"use client";
 
 import React from "react";
 import { LogOut, Moon, Sun, Settings, User, RefreshCw } from "lucide-react";
@@ -6,14 +6,6 @@ import { useTheme } from "next-themes";
 import { useAuth } from "@/contexts/AuthContext";
 import { useServerStatus } from "@/hooks/useServerStatus";
 import NotificationCenter from "@/components/NotificationCenter";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -26,7 +18,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -60,69 +52,60 @@ const Header: React.FC = () => {
                   {isLoading ? "Checking..." : isOnline ? "Online" : "Offline"}
                 </span>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={() => refetch()}
-                disabled={isLoading}
-                className="h-6 w-6 p-0"
+                className="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                title={`Last checked: ${formatLastChecked(lastChecked)}`}
               >
-                <RefreshCw
-                  className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`}
-                />
-              </Button>
+                <RefreshCw className="h-3 w-3" />
+              </button>
             </div>
 
             {/* Notifications */}
             <NotificationCenter />
 
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-9 w-9 p-0"
-            >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+            {/* User Info */}
+            <div className="flex items-center space-x-3 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-white" />
+              </div>
+              <div className="text-sm">
+                <div className="font-medium text-gray-900 dark:text-white">
+                  {user?.name}
+                </div>
+                <div className="text-gray-600 dark:text-gray-400">
+                  Administrator
+                </div>
+              </div>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            </div>
 
-            {/* User Menu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-9 w-9 p-0">
-                  <User className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <div className="px-2 py-1.5 text-sm font-medium">
-                  {user?.name || "User"}
-                </div>
-                <div className="px-2 py-1.5 text-xs text-gray-500">
-                  {user?.email}
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Sign out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5 text-yellow-500" />
+              ) : (
+                <Moon className="h-5 w-5 text-gray-700" />
+              )}
+            </button>
+
+            {/* Settings */}
+            <button className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              <Settings className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+            </button>
+
+            {/* Logout */}
+            <button
+              onClick={logout}
+              className="p-2 rounded-lg bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 transition-colors group"
+            >
+              <LogOut className="h-5 w-5 text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform" />
+            </button>
           </div>
         </div>
-
-        {/* Server Status Details */}
-        {lastChecked && (
-          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-            Last checked: {formatLastChecked(lastChecked)}
-          </div>
-        )}
       </div>
     </header>
   );

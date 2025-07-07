@@ -1,204 +1,87 @@
 "use client";
 
 import React from "react";
-import { X, Download, Eye, Pause, Play, Square } from "lucide-react";
-import { useAppStore, ProcessingJob } from "@/stores/useAppStore";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Loader2,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+  Radio,
+  Database,
+} from "lucide-react";
+import { useAppStore } from "@/stores/useAppStore";
 
 const ProcessingStatusWidget: React.FC = () => {
-  const { processingJobs, activeJobId, updateJob, completeJob, removeJob } =
-    useAppStore();
+  const { processingJobs } = useAppStore();
 
-  const activeJob = processingJobs.find((job) => job.id === activeJobId);
-  const runningJobs = processingJobs.filter((job) => job.status === "running");
-  const completedJobs = processingJobs.filter(
-    (job) => job.status === "completed"
+  const activeJobs = processingJobs.filter(
+    (job) => job.status === "running" || job.status === "pending"
   );
 
-  if (!activeJob && runningJobs.length === 0 && completedJobs.length === 0) {
+  if (activeJobs.length === 0) {
     return null;
   }
 
-  const formatDuration = (startTime: Date, endTime?: Date) => {
-    const end = endTime || new Date();
-    const duration = Math.floor((end.getTime() - startTime.getTime()) / 1000);
-
-    if (duration < 60) {
-      return `${duration}s`;
-    } else if (duration < 3600) {
-      return `${Math.floor(duration / 60)}m ${duration % 60}s`;
-    } else {
-      return `${Math.floor(duration / 3600)}h ${Math.floor(
-        (duration % 3600) / 60
-      )}m`;
-    }
-  };
-
-  const handleDownload = (job: ProcessingJob) => {
-    if (job.downloadUrl) {
-      window.open(job.downloadUrl, "_blank");
-    }
-  };
-
-  const handlePauseResume = (jobId: string, status: string) => {
-    if (status === "running") {
-      updateJob(jobId, { status: "pending" });
-    } else {
-      updateJob(jobId, { status: "running" });
-    }
-  };
-
-  const handleStop = (jobId: string) => {
-    completeJob(jobId, { error: "Job stopped by user" });
-  };
-
   return (
-    <div className="fixed bottom-6 right-6 z-50 max-w-sm w-80">
-      <Card className="shadow-lg">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium">
-            Processing Status
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {/* Active/Running Jobs */}
-          {[
-            ...runningJobs,
-            ...(activeJob && !runningJobs.includes(activeJob)
-              ? [activeJob]
-              : []),
-          ].map((job) => (
-            <div key={job.id} className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">
-                    {job.type === "chart-build"
-                      ? "Chart Generation"
-                      : "Site Values Export"}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {formatDuration(job.startTime)}
-                  </p>
-                </div>
-                <div className="flex space-x-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handlePauseResume(job.id, job.status)}
-                    className="h-6 w-6 p-0"
-                  >
-                    {job.status === "running" ? (
-                      <Pause className="h-3 w-3" />
-                    ) : (
-                      <Play className="h-3 w-3" />
-                    )}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleStop(job.id)}
-                    className="h-6 w-6 p-0"
-                  >
-                    <Square className="h-3 w-3" />
-                  </Button>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <Progress value={job.progress} className="h-2" />
-                <div className="flex justify-between text-xs text-gray-500">
-                  <span>{job.progress.toFixed(0)}% complete</span>
-                  <span
-                    className={`font-medium ${
-                      job.status === "running"
-                        ? "text-blue-600"
-                        : "text-yellow-600"
-                    }`}
-                  >
-                    {job.status}
-                  </span>
-                </div>
-              </div>
+    <div className="fixed bottom-4 right-4 z-50 space-y-2">
+      {activeJobs.map((job) => (
+        <div
+          key={job.id}
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 min-w-[300px] max-w-[400px]"
+        >
+          <div className="flex items-center space-x-3">
+            <div className="flex-shrink-0">
+              {job.status === "running" ? (
+                <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
+              ) : job.status === "completed" ? (
+                <CheckCircle className="h-5 w-5 text-green-500" />
+              ) : job.status === "failed" ? (
+                <AlertCircle className="h-5 w-5 text-red-500" />
+              ) : (
+                <Clock className="h-5 w-5 text-gray-400" />
+              )}
             </div>
-          ))}
 
-          {/* Completed Jobs (last 2) */}
-          {completedJobs.slice(0, 2).map((job) => (
-            <div key={job.id} className="space-y-2 border-t pt-2">
-              <div className="flex items-center justify-between">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">
-                    {job.type === "chart-build"
-                      ? "Chart Generation"
-                      : "Site Values Export"}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Completed • {formatDuration(job.startTime, job.endTime)}
-                  </p>
-                </div>
-                <div className="flex space-x-1">
-                  {job.downloadUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDownload(job)}
-                      className="h-6 w-6 p-0"
-                    >
-                      <Download className="h-3 w-3" />
-                    </Button>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeJob(job.id)}
-                    className="h-6 w-6 p-0"
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
-                </div>
-              </div>
+            <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2">
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    job.error ? "bg-red-500" : "bg-green-500"
-                  }`}
-                />
-                <span
-                  className={`text-xs ${
-                    job.error ? "text-red-600" : "text-green-600"
-                  }`}
-                >
-                  {job.error ? "Failed" : "Success"}
-                </span>
-                {job.error && (
-                  <span className="text-xs text-gray-500 truncate">
-                    {job.error}
-                  </span>
+                {job.type === "chart-build" ? (
+                  <Radio className="h-4 w-4 text-blue-500" />
+                ) : (
+                  <Database className="h-4 w-4 text-purple-500" />
                 )}
+                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                  {job.type === "chart-build"
+                    ? `Building ${job.data.nodeName}`
+                    : `Generating ${job.data.siteType} values`}
+                </p>
               </div>
-            </div>
-          ))}
 
-          {/* View All Button */}
-          {processingJobs.length > 3 && (
-            <div className="pt-2 border-t">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full text-xs"
-                onClick={() => {
-                  // Navigate to history section
-                  useAppStore.getState().setCurrentSection("history");
-                }}
-              >
-                <Eye className="h-3 w-3 mr-1" />
-                View All ({processingJobs.length - 3} more)
-              </Button>
+              <div className="mt-2">
+                <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span>
+                    {job.status === "running" ? "Processing..." : "Queued"}
+                  </span>
+                  <span>{job.progress.toFixed(0)}%</span>
+                </div>
+                <div className="mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div
+                    className="h-2 rounded-full bg-blue-500 transition-all duration-300"
+                    style={{ width: `${job.progress}%` }}
+                  />
+                </div>
+              </div>
+
+              {job.status === "running" && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {job.type === "chart-build"
+                    ? "Generating helm chart configuration..."
+                    : "Processing site configuration..."}
+                </p>
+              )}
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

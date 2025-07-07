@@ -127,16 +127,14 @@ function ChartTooltipContent({
   indicator?: "line" | "dot" | "dashed";
   hideLabel?: boolean;
   hideIndicator?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  labelFormatter?: (label: any, payload: Array<any>) => React.ReactNode;
+  labelFormatter?: (label: unknown, payload: Array<unknown>) => React.ReactNode;
   labelClassName?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formatter?: (
-    value: any,
-    name: any,
-    item: any,
+    value: unknown,
+    name: unknown,
+    item: unknown,
     index: number,
-    payload: any
+    payload: unknown
   ) => React.ReactNode;
   color?: string;
   nameKey?: string;

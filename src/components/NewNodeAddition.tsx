@@ -123,22 +123,24 @@ const NewNodeAddition: React.FC = () => {
     },
   ]);
 
-  const dataTypeOptions = [
-    { name: "PM_STATISTICAL", value: "PM_STATISTICAL" },
-    { name: "PM_STATISTICAL_1MIN", value: "PM_STATISTICAL_1MIN" },
-    { name: "PM_STATISTICAL_5MIN", value: "PM_STATISTICAL_5MIN" },
-  ];
+  // Data type options
+  // const dataTypeOptions = [
+  //   { name: "PM_STATISTICAL", value: "PM_STATISTICAL" },
+  //   { name: "PM_STATISTICAL_1MIN", value: "PM_STATISTICAL_1MIN" },
+  //   { name: "PM_STATISTICAL_5MIN", value: "PM_STATISTICAL_5MIN" },
+  // ];
 
   const addLog = (level: LogEntry["level"], message: string) => {
     const timestamp = new Date().toLocaleTimeString();
     setLogs((prev) => [...prev, { timestamp, level, message }]);
   };
 
-  const updateStepStatus = (stepId: string, status: Step["status"]) => {
-    setSteps((prev) =>
-      prev.map((step) => (step.id === stepId ? { ...step, status } : step))
-    );
-  };
+  // Function to update step status
+  // const updateStepStatus = (stepId: string, status: Step["status"]) => {
+  //   setSteps((prev) =>
+  //     prev.map((step) => (step.id === stepId ? { ...step, status } : step))
+  //   );
+  // };
 
   const isQuestionnaireValid = () => {
     return answers.nodeName.trim() !== "" && answers.dataType !== "";
@@ -395,7 +397,7 @@ const NewNodeAddition: React.FC = () => {
           maxSize={50 * 1024 * 1024} // 50MB
         />
         {uploadedFile && (
-          <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+          <div className="mt-4 p-4 bg-green-50 dark:bg-green-900 rounded-lg">
             <div className="flex items-center space-x-2">
               <CheckCircle className="h-5 w-5 text-green-600" />
               <span className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -449,7 +451,7 @@ const NewNodeAddition: React.FC = () => {
           )}
 
           {error && (
-            <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <div className="mt-4 p-4 bg-red-50 dark:bg-red-900 rounded-lg">
               <div className="flex items-center space-x-2">
                 <AlertTriangle className="h-5 w-5 text-red-600" />
                 <span className="text-sm font-medium text-red-700 dark:text-red-300">
@@ -463,7 +465,7 @@ const NewNodeAddition: React.FC = () => {
           )}
 
           {processingComplete && helmChartUrl && (
-            <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+            <div className="mt-4 p-4 bg-green-50 dark:bg-green-900 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="h-5 w-5 text-green-600" />
