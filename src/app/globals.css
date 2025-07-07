@@ -1,58 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.53 0.166 258.85);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.145 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.145 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.53 0.166 258.85);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.504 0.116 237.685);
-  --chart-4: oklch(0.734 0.198 83.488);
-  --chart-5: oklch(0.715 0.213 35.677);
-  --radius: 0.5rem;
+  --background: 249 250 251; /* bg-gray-50 - matches original light background */
+  --foreground: 17 24 39; /* text-gray-900 - matches original light text */
+  --card: 255 255 255; /* bg-white - matches original light cards */
+  --card-foreground: 17 24 39; /* text-gray-900 */
+  --popover: 255 255 255; /* bg-white */
+  --popover-foreground: 17 24 39; /* text-gray-900 */
+  --primary: 59 130 246; /* blue-500 - matches original primary */
+  --primary-foreground: 255 255 255; /* white */
+  --secondary: 243 244 246; /* bg-gray-100 - matches original muted backgrounds */
+  --secondary-foreground: 17 24 39; /* text-gray-900 */
+  --muted: 243 244 246; /* bg-gray-100 - matches original */
+  --muted-foreground: 75 85 99; /* text-gray-600 - matches original secondary text */
+  --accent: 243 244 246; /* bg-gray-100 */
+  --accent-foreground: 17 24 39; /* text-gray-900 */
+  --destructive: 239 68 68; /* red-500 */
+  --destructive-foreground: 255 255 255; /* white */
+  --border: 229 231 235; /* border-gray-200 - matches original borders */
+  --input: 229 231 235; /* border-gray-200 */
+  --ring: 59 130 246; /* blue-500 */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.708 0.156 258.93);
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.262 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.262 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.262 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.462 0.235 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.262 0 0);
-  --input: oklch(0.262 0 0);
-  --ring: oklch(0.708 0.156 258.93);
-  --chart-1: oklch(0.708 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.504 0.116 237.685);
-  --chart-4: oklch(0.734 0.198 83.488);
-  --chart-5: oklch(0.715 0.213 35.677);
+  --background: 17 24 39; /* bg-gray-900 - matches original dark background */
+  --foreground: 255 255 255; /* text-white - matches original dark text */
+  --card: 31 41 55; /* bg-gray-800 - matches original dark cards */
+  --card-foreground: 255 255 255; /* text-white */
+  --popover: 31 41 55; /* bg-gray-800 */
+  --popover-foreground: 255 255 255; /* text-white */
+  --primary: 99 102 241; /* indigo-500 */
+  --primary-foreground: 17 24 39; /* gray-900 */
+  --secondary: 31 41 55; /* bg-gray-800 - matches original dark muted */
+  --secondary-foreground: 255 255 255; /* text-white */
+  --muted: 31 41 55; /* bg-gray-800 - matches original */
+  --muted-foreground: 156 163 175; /* text-gray-400 - matches original dark secondary text */
+  --accent: 31 41 55; /* bg-gray-800 */
+  --accent-foreground: 255 255 255; /* text-white */
+  --destructive: 248 113 113; /* red-400 */
+  --destructive-foreground: 255 255 255; /* white */
+  --border: 55 65 81; /* border-gray-700 - matches original dark borders */
+  --input: 55 65 81; /* border-gray-700 */
+  --ring: 99 102 241; /* indigo-500 */
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
 /* Custom scrollbar styles to match the old project */

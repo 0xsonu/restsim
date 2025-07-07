@@ -84,8 +84,8 @@ const NotificationCenter: React.FC = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-80">
-        <div className="flex items-center justify-between p-3 border-b">
-          <h3 className="font-semibold">Notifications</h3>
+        <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
+          <h3 className="font-semibold text-gray-900 dark:text-white">Notifications</h3>
           <div className="flex space-x-2">
             {unreadCount > 0 && (
               <Button
@@ -110,7 +110,7 @@ const NotificationCenter: React.FC = () => {
 
         <ScrollArea className="h-80">
           {notifications.length === 0 ? (
-            <div className="p-4 text-center text-gray-500 text-sm">
+            <div className="p-4 text-center text-gray-500 dark:text-gray-400 text-sm">
               No notifications
             </div>
           ) : (
@@ -130,7 +130,7 @@ const NotificationCenter: React.FC = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2">
-                          <h4 className="text-sm font-medium truncate">
+                          <h4 className="text-sm font-medium truncate text-gray-900 dark:text-white">
                             {notification.title}
                           </h4>
                           {!notification.read && (
@@ -141,7 +141,7 @@ const NotificationCenter: React.FC = () => {
                           {notification.message}
                         </p>
                         <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
                             {formatTimestamp(notification.timestamp)}
                           </span>
                           {notification.actionData?.downloadUrl &&

@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900">
       <Sidebar
         activeSection={currentSection}
         onSectionChange={setCurrentSection}
@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
       <div className="flex-1 flex flex-col">
         <Header />
 
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 p-6 overflow-y-auto bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto">{renderContent()}</div>
         </main>
       </div>

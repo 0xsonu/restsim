@@ -10,13 +10,13 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "border-transparent bg-primary text-primary-foreground bg-blue-600 text-white [a&]:hover:bg-primary/90 [a&]:hover:bg-blue-700",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+          "border-transparent bg-secondary text-secondary-foreground bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white [a&]:hover:bg-secondary/90 [a&]:hover:bg-gray-200 dark:[a&]:hover:bg-gray-600",
         destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "border-transparent bg-destructive text-destructive-foreground bg-red-600 text-white [a&]:hover:bg-destructive/90 [a&]:hover:bg-red-700 focus-visible:ring-red-500/20 dark:focus-visible:ring-red-400/40",
         outline:
-          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+          "text-foreground border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white [a&]:hover:bg-accent [a&]:hover:text-accent-foreground [a&]:hover:bg-gray-100 dark:[a&]:hover:bg-gray-800",
       },
     },
     defaultVariants: {

@@ -10,16 +10,16 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+          "bg-primary text-primary-foreground bg-blue-600 dark:bg-blue-600 text-white shadow-xs hover:bg-primary/90 hover:bg-blue-700 dark:hover:bg-blue-700",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-destructive-foreground bg-red-600 dark:bg-red-600 text-white shadow-xs hover:bg-destructive/90 hover:bg-red-700 dark:hover:bg-red-700 focus-visible:ring-red-500/20 dark:focus-visible:ring-red-400/40",
         outline:
-          "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-xs hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white",
+          "border border-input border-gray-300 dark:border-gray-600 bg-background bg-white dark:bg-gray-800 shadow-xs hover:bg-accent hover:text-accent-foreground hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs hover:bg-secondary/80 hover:bg-gray-200 dark:hover:bg-gray-600",
         ghost:
-          "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white",
-        link: "text-primary underline-offset-4 hover:underline",
+          "hover:bg-accent hover:text-accent-foreground hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white",
+        link: "text-primary text-blue-600 dark:text-blue-400 underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
