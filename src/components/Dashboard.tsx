@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import NewNodeAddition from "@/components/NewNodeAddition";
 import SiteValueGeneration from "@/components/SiteValueGeneration";
-import History from "@/components/History";
+import ProcessingHistory from "@/components/ProcessingHistory";
 import ProcessingStatusWidget from "@/components/ProcessingStatusWidget";
 import { useAppStore } from "@/stores/useAppStore";
 import { backgroundProcessor } from "@/services/backgroundProcessor";
@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
       case "site-values":
         return <SiteValueGeneration />;
       case "history":
-        return <History />;
+        return <ProcessingHistory />;
       default:
         return (
           <div className="flex items-center justify-center h-96">

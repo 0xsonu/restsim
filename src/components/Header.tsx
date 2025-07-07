@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LogOut, Moon, Sun, Settings, User, RefreshCw } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,6 +11,11 @@ const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuth();
   const { isOnline, isLoading, lastChecked, refetch } = useServerStatus();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const formatLastChecked = (date: Date | null) => {
     if (!date) return "Never";
@@ -84,11 +89,19 @@ const Header: React.FC = () => {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              disabled={!mounted}
             >
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5 text-yellow-500" />
-              ) : (
-                <Moon className="h-5 w-5 text-gray-700" />
+              {mounted && (
+                <>
+                  {theme === "dark" ? (
+                    <Sun className="h-5 w-5 text-yellow-500" />
+                  ) : (
+                    <Moon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                  )}
+                </>
+              )}
+              {!mounted && (
+                <div className="h-5 w-5 bg-gray-300 dark:bg-gray-600 rounded animate-pulse" />
               )}
             </button>
 

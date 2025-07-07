@@ -155,13 +155,14 @@ const NewNodeAddition: React.FC = () => {
     }
   };
 
-  const handleBack = () => {
-    if (currentPhase === "upload") {
-      setCurrentPhase("questionnaire");
-    } else if (currentPhase === "processing" && !isProcessing) {
-      setCurrentPhase("upload");
-    }
-  };
+  // Navigation helper function
+  // const handleBack = () => {
+  //   if (currentPhase === "upload") {
+  //     setCurrentPhase("questionnaire");
+  //   } else if (currentPhase === "processing" && !isProcessing) {
+  //     setCurrentPhase("upload");
+  //   }
+  // };
 
   const startProcessing = () => {
     setError(null);
@@ -311,147 +312,302 @@ const NewNodeAddition: React.FC = () => {
   }, [currentJob, answers.nodeName]);
 
   const renderQuestionnaire = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
-          <Radio className="h-5 w-5 text-blue-600" />
-          <span>Network Node Configuration</span>
-        </CardTitle>
-        <CardDescription>
-          Configure your new 4G/5G network node by providing the required
-          information below.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="nodeName">Node Name</Label>
-          <Input
-            id="nodeName"
-            placeholder="e.g., eNodeB_Site_001"
-            value={answers.nodeName}
-            onChange={(e) =>
-              setAnswers((prev) => ({ ...prev, nodeName: e.target.value }))
-            }
-          />
-          <p className="text-sm text-gray-500">
-            Unique identifier for the new network node
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="dataType">Data Collection Type</Label>
-          <div className="relative">
-            <select
-              id="dataType"
-              value={answers.dataType}
-              onChange={(e) =>
-                setAnswers((prev) => ({ ...prev, dataType: e.target.value }))
-              }
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none pr-10"
+    <div className="max-w-2xl mx-auto">
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Radio className="h-5 w-5 text-blue-600" />
+            <span>Network Node Configuration</span>
+          </CardTitle>
+          <CardDescription>
+            Configure your new 4G/5G network node by providing the required
+            information below.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label
+              htmlFor="nodeName"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              <option value="">Select data collection type</option>
-              <option value="PM_STATISTICAL">PM_STATISTICAL</option>
-              <option value="PM_STATISTICAL_1MIN">PM_STATISTICAL_1MIN</option>
-              <option value="PM_STATISTICAL_5MIN">PM_STATISTICAL_5MIN</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg
-                className="h-4 w-4 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
+              Node Name <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="nodeName"
+              placeholder="e.g., eNodeB_Site_001"
+              value={answers.nodeName}
+              onChange={(e) =>
+                setAnswers((prev) => ({ ...prev, nodeName: e.target.value }))
+              }
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors"
+            />
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Unique identifier for the new network node
+            </p>
           </div>
-          <p className="text-sm text-gray-500">
-            Performance monitoring data collection interval
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+
+          <div className="space-y-2">
+            <Label
+              htmlFor="dataType"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Data Collection Type <span className="text-red-500">*</span>
+            </Label>
+            <div className="relative">
+              <select
+                id="dataType"
+                value={answers.dataType}
+                onChange={(e) =>
+                  setAnswers((prev) => ({ ...prev, dataType: e.target.value }))
+                }
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors appearance-none pr-10"
+              >
+                <option value="">Select data collection type</option>
+                <option value="PM_STATISTICAL">PM_STATISTICAL</option>
+                <option value="PM_STATISTICAL_1MIN">PM_STATISTICAL_1MIN</option>
+                <option value="PM_STATISTICAL_5MIN">PM_STATISTICAL_5MIN</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg
+                  className="h-4 w-4 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Performance monitoring data collection interval
+            </p>
+          </div>
+
+          {/* Configuration Summary */}
+          {isQuestionnaireValid() && (
+            <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+              <h4 className="font-medium text-blue-800 dark:text-blue-300 mb-2">
+                Configuration Summary
+              </h4>
+              <div className="space-y-1 text-sm text-blue-700 dark:text-blue-400">
+                <p>
+                  <strong>Node Name:</strong> {answers.nodeName}
+                </p>
+                <p>
+                  <strong>Data Type:</strong> {answers.dataType}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Continue Button */}
+          <div className="flex justify-end pt-4">
+            <Button
+              onClick={handleNext}
+              disabled={!isQuestionnaireValid()}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition-colors font-medium flex items-center space-x-2"
+            >
+              <span>Continue to Upload</span>
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 
   const renderUpload = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
-          <Wifi className="h-5 w-5 text-green-600" />
-          <span>Upload Network Configuration</span>
-        </CardTitle>
-        <CardDescription>
-          Upload your recording.zip file containing the network configuration
-          data.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <FileUpload
-          onFileSelect={setUploadedFile}
-          acceptedTypes=".zip"
-          maxSize={50 * 1024 * 1024} // 50MB
-        />
-        {uploadedFile && (
-          <div className="mt-4 p-4 bg-green-50 dark:bg-green-900 rounded-lg">
-            <div className="flex items-center space-x-2">
-              <CheckCircle className="h-5 w-5 text-green-600" />
-              <span className="text-sm font-medium text-green-700 dark:text-green-300">
-                File uploaded successfully
-              </span>
+    <div className="max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Configuration Summary */}
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-lg">Configuration</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Node Name
+                </p>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {answers.nodeName}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Data Type
+                </p>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {answers.dataType}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-              {uploadedFile.name} (
-              {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB)
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPhase("questionnaire")}
+              className="mt-4 flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Edit Configuration</span>
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* File Upload */}
+        <div className="lg:col-span-2">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Wifi className="h-5 w-5 text-green-600" />
+                <span>Upload Network Configuration</span>
+              </CardTitle>
+              <CardDescription>
+                Upload your recording.zip file containing the network
+                configuration data.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FileUpload
+                onFileSelect={setUploadedFile}
+                acceptedTypes=".zip"
+                maxSize={50 * 1024 * 1024} // 50MB
+              />
+              {uploadedFile && (
+                <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {uploadedFile.name}
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                    <Button
+                      onClick={handleNext}
+                      disabled={!uploadedFile || isProcessing}
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition-colors font-medium flex items-center space-x-2"
+                    >
+                      <Radio className="h-4 w-4" />
+                      <span>
+                        {isProcessing ? "Processing..." : "Start Processing"}
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {uploadedFile && (
+                <div className="mt-4 p-4 bg-green-50 dark:bg-green-900 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                      File uploaded successfully
+                    </span>
+                  </div>
+                  <p className="text-sm text-green-600 dark:text-green-400 mt-1">
+                    {uploadedFile.name} (
+                    {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB)
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
   );
 
   const renderProcessing = () => (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Cpu className="h-5 w-5 text-purple-600" />
-            <span>Helm Chart Generation</span>
-            {isProcessing && (
-              <Badge variant="secondary" className="ml-auto">
-                Processing...
-              </Badge>
-            )}
-            {processingComplete && (
-              <Badge variant="default" className="ml-auto bg-green-600">
-                Complete
-              </Badge>
-            )}
-          </CardTitle>
-          <CardDescription>
-            Building custom helm chart for {answers.nodeName} with{" "}
-            {answers.dataType} data collection
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ProcessingSteps steps={steps} currentStep={currentStep} />
+    <div className="max-w-6xl mx-auto">
+      {/* Main Content Grid - Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left Column - Steps and Controls */}
+        <div className="space-y-6">
+          {/* Processing Steps */}
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Cpu className="h-5 w-5 text-purple-600" />
+                <span>Helm Chart Generation</span>
+                {isProcessing && (
+                  <Badge variant="secondary" className="ml-auto">
+                    Processing...
+                  </Badge>
+                )}
+                {processingComplete && (
+                  <Badge variant="default" className="ml-auto bg-green-600">
+                    Complete
+                  </Badge>
+                )}
+              </CardTitle>
+              <CardDescription>
+                Building custom helm chart for {answers.nodeName} with{" "}
+                {answers.dataType} data collection
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ProcessingSteps steps={steps} currentStep={currentStep} />
 
-          {currentJob && (
-            <div className="mt-6 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Overall Progress</span>
-                <span>{currentJob.progress.toFixed(0)}%</span>
+              {currentJob && (
+                <div className="mt-6 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Overall Progress</span>
+                    <span>{currentJob.progress.toFixed(0)}%</span>
+                  </div>
+                  <Progress value={currentJob.progress} className="h-2" />
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Download Section */}
+          {processingComplete && helmChartUrl && (
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900 dark:to-emerald-900 border border-green-200 dark:border-green-700 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center space-x-3 mb-4">
+                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                  {answers.nodeName} Integration Complete
+                </h3>
               </div>
-              <Progress value={currentJob.progress} className="h-2" />
+              <p className="text-green-700 dark:text-green-400 mb-4">
+                Your new network node has been successfully integrated with{" "}
+                {answers.dataType} data collection and the helm chart is ready
+                for deployment.
+              </p>
+              {currentJob?.id && (
+                <p className="text-sm text-green-600 dark:text-green-500 mb-4">
+                  Job ID: {currentJob.id}
+                </p>
+              )}
+              <div className="flex space-x-3">
+                <Button
+                  onClick={() => window.open(helmChartUrl, "_blank")}
+                  className="flex items-center space-x-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium shadow-sm hover:shadow-md"
+                >
+                  <Download className="h-5 w-5" />
+                  <span>Download Helm Chart</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={reset}
+                  className="flex items-center space-x-2 px-6 py-3 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors font-medium"
+                >
+                  <RefreshCw className="h-5 w-5" />
+                  <span>Add Another Node</span>
+                </Button>
+              </div>
             </div>
           )}
 
           {error && (
-            <div className="mt-4 p-4 bg-red-50 dark:bg-red-900 rounded-lg">
+            <div className="p-4 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg">
               <div className="flex items-center space-x-2">
                 <AlertTriangle className="h-5 w-5 text-red-600" />
                 <span className="text-sm font-medium text-red-700 dark:text-red-300">
@@ -463,75 +619,118 @@ const NewNodeAddition: React.FC = () => {
               </p>
             </div>
           )}
+        </div>
 
-          {processingComplete && helmChartUrl && (
-            <div className="mt-4 p-4 bg-green-50 dark:bg-green-900 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-sm font-medium text-green-700 dark:text-green-300">
-                    Helm Chart Ready
+        {/* Right Column - Logs and Status */}
+        <div className="space-y-6">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg">
+            <CardHeader>
+              <CardTitle>Processing Logs</CardTitle>
+              <CardDescription>
+                Real-time processing information and status updates
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LogViewer logs={logs} />
+            </CardContent>
+          </Card>
+
+          {/* Network Status */}
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Wifi className="h-5 w-5 text-blue-500" />
+                <span>Network Status</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">
+                    RESTSim Engine
                   </span>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-sm text-green-600 dark:text-green-400">
+                      Online
+                    </span>
+                  </div>
                 </div>
-                <Button
-                  size="sm"
-                  onClick={() => window.open(helmChartUrl, "_blank")}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </Button>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">
+                    Active Nodes
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                    <span className="text-sm text-blue-600 dark:text-blue-400">
+                      24 Nodes
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">
+                    Network Coverage
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-sm text-green-600 dark:text-green-400">
+                      98.5%
+                    </span>
+                  </div>
+                </div>
+                {isProcessing && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">
+                      Node Integration
+                    </span>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+                      <span className="text-sm text-orange-600 dark:text-orange-400">
+                        Processing
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {answers.nodeName && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">
+                      Current Node
+                    </span>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                      <span className="text-sm text-blue-600 dark:text-blue-400">
+                        {answers.nodeName}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {currentJob?.id && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">
+                      Job ID
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">
+                      {currentJob.id}
+                    </span>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <LogViewer logs={logs} />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            New Node Addition
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            Add new 4G/5G network nodes to your simulation environment
-          </p>
-        </div>
-
-        <div className="flex space-x-2">
-          {currentPhase !== "questionnaire" && !isProcessing && (
-            <Button variant="outline" onClick={handleBack}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
-          )}
-
-          {currentPhase === "questionnaire" && (
-            <Button onClick={handleNext} disabled={!isQuestionnaireValid()}>
-              Next
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
-          )}
-
-          {currentPhase === "upload" && uploadedFile && (
-            <Button onClick={handleNext}>
-              Start Processing
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
-          )}
-
-          {processingComplete && (
-            <Button onClick={reset}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Start New
-            </Button>
-          )}
-        </div>
+    <div className="space-y-6">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          New Node Addition
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
+          Add new 4G/5G network nodes to your simulation environment
+        </p>
       </div>
 
       {currentPhase === "questionnaire" && renderQuestionnaire()}

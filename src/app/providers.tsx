@@ -22,9 +22,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <ThemeProvider
         attribute="class"
         defaultTheme="dark"
-        enableSystem={false}
-        disableTransitionOnChange
+        enableSystem={true}
+        disableTransitionOnChange={false}
         storageKey="restsim-theme"
+        themes={["light", "dark"]}
       >
         <AuthProvider>{children}</AuthProvider>
       </ThemeProvider>
