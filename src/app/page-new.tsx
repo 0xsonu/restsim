@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import Login from "@/components/Login";
 import Dashboard from "@/components/Dashboard";
-// import NetworkBackground from '@/components/NetworkBackground';
+import NetworkBackground from "@/components/NetworkBackground";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* <NetworkBackground /> */}
+      <NetworkBackground />
       {user ? <Dashboard /> : <Login />}
     </div>
   );
