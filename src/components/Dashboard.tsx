@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900">
+    <div className="h-screen flex bg-gray-50 dark:bg-gray-900">
       <Sidebar
         activeSection={currentSection}
         onSectionChange={setCurrentSection}

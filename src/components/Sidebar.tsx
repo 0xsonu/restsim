@@ -91,9 +91,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-full flex flex-col">
+    <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-screen flex flex-col">
       {/* Logo Section */}
-      <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
         <div className="flex items-center space-x-3">
           <div className="relative">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
@@ -115,7 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Status Bar */}
-      <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+      <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div
@@ -211,7 +211,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0 mt-auto">
         <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
           <div>RESTSim Platform</div>
           <div>© 2024 Network Solutions</div>
